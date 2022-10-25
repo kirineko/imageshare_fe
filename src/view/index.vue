@@ -1,62 +1,76 @@
 <template>
   <div>
-    <el-container>
-      <el-header>April的阿里云图片小站</el-header>
-      <el-container>
-        <el-aside width="200px"><NavMenuVue /></el-aside>
-        <el-main><router-view /></el-main>
-      </el-container>
-    </el-container>
+    <div class="navbar bg-base-100">
+      <div class="navbar-start">
+        <div class="dropdown">
+          <label tabindex="0" class="btn btn-ghost lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </label>
+          <ul
+            ref="dropdownMenu"
+            tabindex="0"
+            class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+          >
+            <li>
+              <a @click="gotoScrolling($event)">全部图片</a>
+            </li>
+            <li>
+              <a @click="gotoUpload($event)">上传图片</a>
+            </li>
+          </ul>
+        </div>
+        <router-link class="btn btn-ghost normal-case text-xl" to="/scrolling"
+          >April的阿里云图片小站
+        </router-link>
+      </div>
+      <div class="navbar-center hidden lg:flex">
+        <ul class="menu menu-horizontal p-0">
+          <li>
+            <a @click="gotoScrolling($event)">全部图片</a>
+          </li>
+          <li>
+            <a @click="gotoUpload($event)">上传图片</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import NavMenuVue from "../components/NavMenu.vue";
-
 export default {
-  name: "",
-  data() {
-    return {};
+  created() {
+    this.$router.push("/upload");
   },
-  components: {
-    NavMenuVue,
+
+  methods: {
+    gotoScrolling(e) {
+      e.preventDefault();
+      this.$router.push("/scrolling");
+      this.$refs.dropdownMenu.blur();
+    },
+
+    gotoUpload(e) {
+      e.preventDefault();
+      this.$router.push("/upload");
+      this.$refs.dropdownMenu.blur();
+    },
   },
 };
 </script>
 
-<style>
-.el-header,
-.el-footer {
-  background-color: #8ab7f8;
-  color: #333;
-  text-align: center;
-  line-height: 60px;
-}
-
-.el-aside {
-  background-color: #d3dce6;
-  color: #333;
-  text-align: center;
-  line-height: 200px;
-}
-
-.el-main {
-  background-color: #e9eef3;
-  color: #333;
-  text-align: center;
-  line-height: 160px;
-}
-
-body > .el-container {
-  margin-bottom: 40px;
-}
-
-.el-container:nth-child(5) .el-aside,
-.el-container:nth-child(6) .el-aside {
-  line-height: 260px;
-}
-
-.el-container:nth-child(7) .el-aside {
-  line-height: 320px;
-}
-</style>
+<style></style>

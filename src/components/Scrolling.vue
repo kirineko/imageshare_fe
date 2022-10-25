@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-white">
+  <div class="bg-base-100">
     <div
-      class="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8"
+      class="mx-auto max-w-2xl py-8 px-4 sm:py-8 sm:px-6 lg:max-w-7xl lg:px-8"
     >
       <h2 class="sr-only">Images</h2>
 
@@ -19,7 +19,7 @@
             />
           </div>
 
-          <h3 class="mt-4 text-sm text-gray-700">
+          <h3 class="mt-4 text-sm text-white text-center">
             {{ data.imageName }}
 
             [{{ data.uploadTime }}]
@@ -68,6 +68,11 @@ export default {
   mounted() {
     this.getPlanList();
   },
+
+  beforeRouterEnter(to, from, next) {
+    this.getPlanList();
+  },
+
   methods: {
     getPlanList() {
       this.axios

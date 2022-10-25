@@ -1,36 +1,24 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
-const layout = () => import("../view/index.vue");
+const index = () => import("../App.vue");
 const scrolling = () => import("../components/Scrolling.vue");
-const home = () => import("../components/Home.vue");
-const navmenu = () => import("../components/NavMenu.vue");
+const upload = () => import("../components/Upload.vue");
 
 const routes = [
   {
     path: "/",
-    component: layout,
-    children: [
-      {
-        path: "/Scrolling",
-        name: "Scrolling",
-        component: scrolling,
-      },
-      {
-        path: "/Scrolling-upload",
-        name: "Scrolling-upload",
-        component: home,
-      },
-      {
-        path: "/Scrolling-all",
-        name: "Scrolling-all",
-        component: home,
-      },
-    ],
+    name: "index",
+    component: index,
   },
   {
-    path: "/NavMenu",
-    name: "NavMenu",
-    component: navmenu,
+    path: "/scrolling",
+    name: "Scrolling",
+    component: scrolling,
+  },
+  {
+    path: "/upload",
+    name: "Upload",
+    component: upload,
   },
 ];
 

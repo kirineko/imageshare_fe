@@ -1,13 +1,18 @@
 <template>
   <div id="app">
     <div class="container mx-auto">
-      <router-view />
+      <Index />
     </div>
   </div>
 </template>
 
 <script>
+import Index from "./view/index.vue";
+
 export default {
   name: "App",
+  components: {
+    Index,
+  },
 };
 </script>
