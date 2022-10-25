@@ -1,6 +1,5 @@
 <template>
   <el-upload
-    class="avatar-uploader"
     v-model="Addfrom.url"
     action=""
     :on-preview="handlePreview"
@@ -11,36 +10,54 @@
     :multiple="true"
     :before-upload="handleBeforeUpload"
     :limit="8"
+    list-type="picture"
   >
-    <div v-for="(item, index) in imageList" :key="index">
-      <img :src="item" class="avatar" :alt="item" />
-      <p>{{ item }}</p>
-    </div>
-    <el-button slot="trigger" size="small" type="primary"
-      >选取图片文件</el-button
-    >
-    <el-button
-      style="margin-left: 10px"
-      size="small"
-      type="success"
-      @click="submitUpload"
-      >上传到服务器</el-button
-    >
-    <h1 v-text="msg"></h1>
+    <template #trigger>
+      <el-button type="primary">选择文件</el-button>
+    </template>
+
+    <el-button class="ml-3" type="success" @click="submitUpload">
+      上传至服务器
+    </el-button>
+
     <el-input
       style="margin-left: 20px"
       v-model="imageName"
       placeholder="请输入名称"
     ></el-input>
-    <!--    日期格式化:{{c_time}}-->
-    <!--    <el-date-picker v-model="c_time" type="date" placeholder="选择日期" value-format="yyyy-MM-dd ">-->
-    <!--    </el-date-picker>-->
+
+    <template #tip>
+      <div class="el-upload__tip">jpg/png files with a size less than 500kb</div>
+    </template>
   </el-upload>
 </template>
-
 <script>
 import { client } from "../utils/alioss.js";
-
+Date.prototype.format = function (format) {
+  var o = {
+    "M+": this.getMonth() + 1, //month
+    "d+": this.getDate(), //day
+    "h+": this.getHours(), //hour
+    "m+": this.getMinutes(), //minute
+    "s+": this.getSeconds(), //second
+    "q+": Math.floor((this.getMonth() + 3) / 3), //quarter
+    S: this.getMilliseconds(), //millisecond
+  };
+  if (/(y+)/.test(format))
+    format = format.replace(
+      RegExp.$1,
+      (this.getFullYear() + "").substr(4 - RegExp.$1.length)
+    );
+  for (var k in o)
+    if (new RegExp("(" + k + ")").test(format))
+      format = format.replace(
+        RegExp.$1,
+        RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length)
+      );
+  return format;
+};
+var date1 = new Date().format("yyyy-MM-dd");
+console.log(date1);
 export default {
   data() {
     return {
@@ -86,7 +103,10 @@ export default {
     uploadURL() {
       for (var i = 0; i < this.fileList.length; i++) {
         let fileName =
-          `${this.imageName}` + `${this.fileList[i].raw.uid}` + ".jpg"; //定义唯一的文件名
+          `${new Date().format("yyyyMMdd/")}` +
+          `${this.imageName}` +
+          `${this.fileList[i].raw.uid}` +
+          ".jpg"; //定义唯一的文件名
         //定义唯一的文件名，打印出来的uid其实就是时间戳
         client()
           .multipartUpload(fileName, this.fileList[i].raw, {
@@ -108,7 +128,7 @@ export default {
           "https://lqhwechat.oss-cn-hangzhou.aliyuncs.com/" + fileName
         );
         formData.append("imageName", this.imageName);
-        if (this.c_time != "") {
+        if (this.imageName != "") {
           this.axios
             .post("/api/image/add", formData)
             .then(function () {
@@ -118,7 +138,7 @@ export default {
               alert(e);
             });
         } else {
-          alert("请上传过期时间");
+          alert("请填写图片名称");
         }
       }
     },
