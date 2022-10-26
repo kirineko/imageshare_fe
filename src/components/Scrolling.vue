@@ -110,7 +110,7 @@ export default {
       this.getUrlBase64(data.imageUrl).then((base64) => {
         let link = document.createElement("a");
         link.href = base64;
-        link.download = "qrCode.png";
+        link.download = data.imageName+"qrCode.png";
         link.click();
       });
     },
