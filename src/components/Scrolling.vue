@@ -97,9 +97,9 @@ export default {
         img.crossOrigin = "Anonymous"; //允许跨域
         img.src = url;
         img.onload = function () {
-          canvas.height = 300;
-          canvas.width = 300;
-          ctx.drawImage(img, 0, 0, 300, 300);
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0, img.width, img.height);
           let dataURL = canvas.toDataURL("image/png");
           canvas = null;
           resolve(dataURL);
@@ -110,7 +110,7 @@ export default {
       this.getUrlBase64(data.imageUrl).then((base64) => {
         let link = document.createElement("a");
         link.href = base64;
-        link.download = "qrCode.png";
+        link.download = data.imageName+".png";
         link.click();
       });
     },
