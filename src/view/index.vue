@@ -54,7 +54,7 @@
 <script>
 export default {
   created() {
-    this.$router.push("/upload");
+    this.$router.push("/scrolling");
   },
 
   methods: {
