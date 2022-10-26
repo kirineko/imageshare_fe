@@ -97,8 +97,8 @@ export default {
         img.crossOrigin = "Anonymous"; //允许跨域
         img.src = url;
         img.onload = function () {
-          canvas.height = 300;
-          canvas.width = 300;
+          // canvas.height = 300;
+          // canvas.width = 300;
           ctx.drawImage(img, 0, 0, 300, 300);
           let dataURL = canvas.toDataURL("image/png");
           canvas = null;
